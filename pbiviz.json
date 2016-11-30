@@ -1,0 +1,24 @@
+{
+  "visual": {
+    "name": "powerBIVisuals",
+    "displayName": "PowerBIVisuals",
+    "guid": "PBI_CV_DB82D0E6_E5C1_4E34_884B_CAD22AFB245B",
+    "visualClassName": "Visual",
+    "version": "1.0.0",
+    "description": "",
+    "supportUrl": "",
+    "gitHubUrl": ""
+  },
+  "apiVersion": "1.2.0",
+  "author": {
+    "name": "",
+    "email": ""
+  },
+  "assets": {
+    "icon": "assets/icon.png"
+  },
+  "externalJS": [],
+  "style": "style/visual.less",
+  "capabilities": "capabilities.json",
+  "dependencies": "dependencies.json"
+}
