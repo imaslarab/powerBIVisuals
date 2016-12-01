@@ -13,19 +13,20 @@ var powerbi;
                     }
                     Visual.prototype.update = function (options) {
                         var _this = this;
-                        var width = 700, height = 400, padding = 100;
+                        var width = options.viewport.width, height = options.viewport.height, padding = 100;
                         _this.svg.attr({
                             height: height,
                             width: width
                         });
-                        var mindate = new Date(2016, 0, 1), maxdate = new Date(2016, 0, 31);
+                        var mindate = new Date(2016, 10, 1), maxdate = new Date(2016, 11, 31);
                         var xScale = d3.time.scale()
                             .domain([mindate, maxdate])
                             .range([padding, width - padding]);
                         var xAxis = d3.svg.axis()
                             .orient("bottom")
                             .scale(xScale)
-                            .ticks(5);
+                            .ticks(d3.time.weeks);
+                        _this.svg.selectAll("*").remove();
                         _this.svg.append("g")
                             .attr("class", "xaxis")
                             .attr("transform", "translate(0," + (height - padding) + ")")

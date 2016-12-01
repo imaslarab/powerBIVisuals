@@ -10,17 +10,17 @@ module powerbi.extensibility.visual.PBI_CV_DB82D0E6_E5C1_4E34_884B_CAD22AFB245B 
 
 	  public update(options: VisualUpdateOptions) {
 			var _this = this;
-			var width = 700,
-		      height = 400,
+			var width = options.viewport.width,
+		      height = options.viewport.height,
 		      padding = 100;
 
 			_this.svg.attr({
 				height: height,
 				width: width
 			});
-		    
-      var mindate = new Date(2016,0,1),
-      		maxdate = new Date(2016,0,31);
+
+      var mindate = new Date(2016,10,1),
+      		maxdate = new Date(2016,11,31);
             
       var xScale = d3.time.scale()
 	      .domain([mindate, maxdate]) 
@@ -29,8 +29,9 @@ module powerbi.extensibility.visual.PBI_CV_DB82D0E6_E5C1_4E34_884B_CAD22AFB245B 
       var xAxis = d3.svg.axis()
         .orient("bottom")
         .scale(xScale)
-        .ticks(5);
+        .ticks(d3.time.weeks);
 
+      _this.svg.selectAll("*").remove();
 	    _this.svg.append("g")
         .attr("class", "xaxis")   
         .attr("transform", "translate(0," + (height - padding) + ")")
@@ -39,7 +40,7 @@ module powerbi.extensibility.visual.PBI_CV_DB82D0E6_E5C1_4E34_884B_CAD22AFB245B 
       _this.svg.selectAll(".xaxis text")
         .attr("transform", function(d) {
             return "translate(" + this.getBBox().height*-2 + "," + this.getBBox().height + ")rotate(-45)";
-      	});	
+      	});	  	
 
 	  }
 
