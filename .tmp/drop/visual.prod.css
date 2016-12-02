@@ -7,7 +7,23 @@
   background: yellow;
   padding: 5px;
 }
-.visual-PBI_CV_DB82D0E6_E5C1_4E34_884B_CAD22AFB245B_DEBUG .axis {
-  shape-rendering: crispEdges;
+.visual-PBI_CV_DB82D0E6_E5C1_4E34_884B_CAD22AFB245B_DEBUG .axis text {
+  font: 10px sans-serif;
+}
+.visual-PBI_CV_DB82D0E6_E5C1_4E34_884B_CAD22AFB245B_DEBUG .axis path,
+.visual-PBI_CV_DB82D0E6_E5C1_4E34_884B_CAD22AFB245B_DEBUG .axis line {
+  fill: none;
   stroke: #000;
+  shape-rendering: crispEdges;
+}
+.visual-PBI_CV_DB82D0E6_E5C1_4E34_884B_CAD22AFB245B_DEBUG .axis .minor line {
+  stroke: #777;
+  stroke-dasharray: 2,2;
+}
+.visual-PBI_CV_DB82D0E6_E5C1_4E34_884B_CAD22AFB245B_DEBUG svg {
+  max-height: 100%;
+  width: 100%;
+}
+.visual-PBI_CV_DB82D0E6_E5C1_4E34_884B_CAD22AFB245B_DEBUG .container {
+  max-height: 100%;
 }
