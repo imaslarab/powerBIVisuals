@@ -17,7 +17,7 @@ module powerbi.extensibility.visual {
         let dataValue = categorical.values[0];
         let dataPoints: Date[] = [];
         var valueInString = category.values[1];
-
+        // console.log(valueInString);
         for (let i = 0, len = Math.max(category.values.length); i < len; i++) {
             dataPoints.push(new Date(category.values[i].toString()));
         }

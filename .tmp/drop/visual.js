@@ -21,6 +21,7 @@ var powerbi;
                     var dataValue = categorical.values[0];
                     var dataPoints = [];
                     var valueInString = category.values[1];
+                    // console.log(valueInString);
                     for (var i = 0, len = Math.max(category.values.length); i < len; i++) {
                         dataPoints.push(new Date(category.values[i].toString()));
                     }
