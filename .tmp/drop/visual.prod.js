@@ -6,38 +6,60 @@ var powerbi;
         (function (visual) {
             var PBI_CV_DB82D0E6_E5C1_4E34_884B_CAD22AFB245B;
             (function (PBI_CV_DB82D0E6_E5C1_4E34_884B_CAD22AFB245B) {
+                ;
+                ;
                 var Visual = (function () {
                     function Visual(options) {
-                        this.container = d3.select(options.element).append('div').style('padding', '10px').classed('container', true);
+                        console.log("helloe");
+                        this.target = options.element;
+                        //	let svg = this.svg = d3.select(options.element).append('svg');
+                        //			this.container= d3.select(options.element).append('div').style('padding','10px').classed('container',true);
                         // this.container.select('div')
                         // .append('div').classed('scrollingDiv',true);
-                        this.slider = d3.select('div.container').append('div').classed('slider', true);
-                        this.svg = d3.select('div.slider').append('svg');
-                        this.g = this.svg.append('g');
+                        // this.slider = d3.select('div.container').append('div').classed('slider', true);
+                        // this.svg = d3.select('div.slider').append('svg');
+                        // this.g = this.svg.append('g');
                     }
+                    Visual.prototype.converter = function (options) {
+                        var dataView = options.dataViews;
+                        //	dataView.categorical.values[0] 
+                        var timelineView;
+                        timelineView.maxStartDate = 23;
+                        timelineView.maxEndDate = 23;
+                        console.log(typeof timelineView);
+                        console.log(timelineView);
+                        return timelineView;
+                    };
+                    ;
                     Visual.prototype.update = function (options) {
-                        var width = options.viewport.width, height = options.viewport.height, padding = 100;
-                        d3.select('div.slider').attr({
-                            width: width * 4
-                        });
-                        var mindate = new Date(2016, 10, 1), maxdate = new Date(2016, 11, 31);
-                        var xScale = d3.time.scale()
-                            .domain([mindate, maxdate])
-                            .range([padding, width * 4 - padding]);
-                        var xAxis = d3.svg.axis()
-                            .orient("bottom")
-                            .scale(xScale)
-                            .ticks(d3.time.weeks)
-                            .tickSize(16, 2);
-                        this.svg.selectAll("*").remove();
-                        this.svg.append("g")
-                            .attr("class", "xaxis")
-                            .attr("transform", "translate(0," + (height - padding) + ")")
-                            .call(xAxis);
-                        this.svg.selectAll(".xaxis text")
-                            .attr("transform", function (d) {
-                            return "translate(" + this.getBBox().height * -2 + "," + this.getBBox().height + ")rotate(-45)";
-                        });
+                        // var width = options.viewport.width,
+                        //     height = options.viewport.height,
+                        //     padding = 100;
+                        var timelineView = this.converter(options);
+                        this.target.innerHTML = "<p>Update count: <em>" + (timelineView.maxEndDate) + "</em></p>";
+                        console.log("updated");
+                        // d3.select('div.slider').attr({
+                        // 	width: width*4
+                        // })
+                        // var mindate = new Date(2016,10,1),
+                        // 		maxdate = new Date(2016,11,31);
+                        // var xScale = d3.time.scale()
+                        //   .domain([mindate, maxdate]) 
+                        // 	.range([padding, width * 4 - padding]);
+                        // var xAxis = d3.svg.axis()
+                        //   .orient("bottom")
+                        //   .scale(xScale)
+                        //   .ticks(d3.time.weeks)
+                        //   .tickSize(16, 2)
+                        // this.svg.selectAll("*").remove();
+                        // this.svg.append("g")
+                        //   .attr("class", "xaxis")   
+                        //   .attr("transform", "translate(0," + (height - padding) + ")")
+                        //   .call(xAxis);
+                        // this.svg.selectAll(".xaxis text")
+                        //   .attr("transform", function(d) {
+                        //       return "translate(" + this.getBBox().height*-2 + "," + this.getBBox().height + ")rotate(-45)";
+                        // 	});	  	
                     };
                     Visual.prototype.destroy = function () {
                         //TODO: Perform any cleanup tasks here
