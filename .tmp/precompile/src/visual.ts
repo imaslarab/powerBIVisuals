@@ -79,6 +79,7 @@ module powerbi.extensibility.visual.PBI_CV_DB82D0E6_E5C1_4E34_884B_CAD22AFB245B 
             .orient("bottom")
             .scale(xScale)
             .ticks(d3.time.month)
+            .tickFormat(d3.time.format("%b %y"))
             .tickSize(16, 2)
 
             this.svg.selectAll("*").remove();

@@ -79,6 +79,7 @@ module powerbi.extensibility.visual {
             .orient("bottom")
             .scale(xScale)
             .ticks(d3.time.month)
+            .tickFormat(d3.time.format("%b %y"))
             .tickSize(16, 2)
 
             this.svg.selectAll("*").remove();
