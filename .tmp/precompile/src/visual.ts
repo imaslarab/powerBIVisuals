@@ -6,7 +6,7 @@ module powerbi.extensibility.visual.PBI_CV_DB82D0E6_E5C1_4E34_884B_CAD22AFB245B 
 	  private g: d3.Selection<SVGElement>;
 
 	  constructor(options: VisualConstructorOptions) {
-			this.container= d3.select(options.element).append('div').style("background", "red").classed('container',true);
+			this.container= d3.select(options.element).append('div').style('padding','10px').classed('container',true);
 			// this.container.select('div')
 			// .append('div').classed('scrollingDiv',true);
 			this.slider = d3.select('div.container').append('div').classed('slider', true);
@@ -19,9 +19,7 @@ module powerbi.extensibility.visual.PBI_CV_DB82D0E6_E5C1_4E34_884B_CAD22AFB245B 
 		      height = options.viewport.height,
 		      padding = 100;
 
-      d3.select('div.container').attr({
-				width: width
-			})
+
 
 		  d3.select('div.slider').attr({
 				width: width*4
@@ -29,8 +27,7 @@ module powerbi.extensibility.visual.PBI_CV_DB82D0E6_E5C1_4E34_884B_CAD22AFB245B 
 
 
 
-			this.container.style("overflow-x", "scroll");
-     
+		     
       var mindate = new Date(2016,10,1),
       		maxdate = new Date(2016,11,31);
             
