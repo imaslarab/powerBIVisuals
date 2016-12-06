@@ -8,58 +8,57 @@ var powerbi;
             (function (PBI_CV_DB82D0E6_E5C1_4E34_884B_CAD22AFB245B) {
                 ;
                 ;
+                function converter(options) {
+                    console.log("enter converter");
+                    var dataViews = options.dataViews;
+                    var categorical = dataViews[0].categorical;
+                    var category = categorical.categories[0];
+                    var dataValue = category.values;
+                    var sortedDate = dataValue.sort();
+                    //	sortedDate.map(function(d: PrimitiveValue):Date{ return new Date(d)});
+                    console.log(new Date(sortedDate[0].toString()));
+                    console.log(sortedDate[sortedDate.length - 2]);
+                    console.log("dates..................");
+                    console.log(typeof sortedDate[0]);
+                    var timelineView = {
+                        maxStartDate: new Date(sortedDate[0].toString()),
+                        maxEndDate: new Date(sortedDate[sortedDate.length - 2].toString())
+                    };
+                    //	dataView.categorical.values[0] ;;;
+                    console.log(timelineView);
+                    return timelineView;
+                }
                 var Visual = (function () {
                     function Visual(options) {
                         console.log("helloe");
                         this.target = options.element;
-                        //	let svg = this.svg = d3.select(options.element).append('svg');
-                        //			this.container= d3.select(options.element).append('div').style('padding','10px').classed('container',true);
-                        // this.container.select('div')
-                        // .append('div').classed('scrollingDiv',true);
-                        // this.slider = d3.select('div.container').append('div').classed('slider', true);
-                        // this.svg = d3.select('div.slider').append('svg');
-                        // this.g = this.svg.append('g');
+                        var svg = this.svg = d3.select(options.element).append('svg').classed('mainSvg', true);
                     }
-                    Visual.prototype.converter = function (options) {
-                        var dataView = options.dataViews;
-                        //	dataView.categorical.values[0] 
-                        var timelineView;
-                        timelineView.maxStartDate = 23;
-                        timelineView.maxEndDate = 23;
-                        console.log(typeof timelineView);
-                        console.log(timelineView);
-                        return timelineView;
-                    };
-                    ;
                     Visual.prototype.update = function (options) {
-                        // var width = options.viewport.width,
-                        //     height = options.viewport.height,
-                        //     padding = 100;
-                        var timelineView = this.converter(options);
-                        this.target.innerHTML = "<p>Update count: <em>" + (timelineView.maxEndDate) + "</em></p>";
+                        var width = options.viewport.width, height = options.viewport.height, padding = 100;
+                        var timelineView = converter(options);
+                        // let maxStartDate= timelineView.maxStartDate.getUTCFullYear();
+                        // let maxEndDate = timelineView.maxEndDate.getUTCFullYear();
+                        //	this.target.innerHTML = `<p>Update count: <em>${(maxStartDate)}</em></p> <p>Update count: <em>${(maxEndDate)}</em></p`;
                         console.log("updated");
-                        // d3.select('div.slider').attr({
-                        // 	width: width*4
-                        // })
-                        // var mindate = new Date(2016,10,1),
-                        // 		maxdate = new Date(2016,11,31);
-                        // var xScale = d3.time.scale()
-                        //   .domain([mindate, maxdate]) 
-                        // 	.range([padding, width * 4 - padding]);
-                        // var xAxis = d3.svg.axis()
-                        //   .orient("bottom")
-                        //   .scale(xScale)
-                        //   .ticks(d3.time.weeks)
-                        //   .tickSize(16, 2)
-                        // this.svg.selectAll("*").remove();
-                        // this.svg.append("g")
-                        //   .attr("class", "xaxis")   
-                        //   .attr("transform", "translate(0," + (height - padding) + ")")
-                        //   .call(xAxis);
-                        // this.svg.selectAll(".xaxis text")
-                        //   .attr("transform", function(d) {
-                        //       return "translate(" + this.getBBox().height*-2 + "," + this.getBBox().height + ")rotate(-45)";
-                        // 	});	  	
+                        var xScale = d3.time.scale()
+                            .domain([timelineView.maxStartDate, timelineView.maxEndDate])
+                            .range([padding, width - padding]);
+                        var xAxis = d3.svg.axis()
+                            .orient("bottom")
+                            .scale(xScale)
+                            .ticks(d3.time.months, 1)
+                            .tickFormat(d3.time.format("%b %y"))
+                            .tickSize(16, 2);
+                        this.svg.selectAll("*").remove();
+                        this.svg.append("g")
+                            .attr("class", "xaxis")
+                            .attr("transform", "translate(0," + (height - padding) + ")")
+                            .call(xAxis);
+                        this.svg.selectAll(".xaxis text")
+                            .attr("transform", function (d) {
+                            return "translate(" + this.getBBox().height * -2 + "," + this.getBBox().height + ")rotate(-45)";
+                        });
                     };
                     Visual.prototype.destroy = function () {
                         //TODO: Perform any cleanup tasks here
