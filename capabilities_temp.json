@@ -1,0 +1,101 @@
+{
+    "dataRoles": [
+        {
+            "displayName": "FY",
+            "name": "fy",
+            "kind": "Grouping"
+        },
+        // {
+        //     "displayName": "Key Milestones",
+        //     "name": "key_milestones",
+        //     "kind":"Grouping"
+        
+        // },
+        // {
+        //     "displayName": "Milestone Type",
+        //     "name": "milestone_typ",
+        //     "kind":"Grouping"
+        
+        // },
+        // {
+        //     "displayName": "Team",
+        //     "name": "team",
+        //     "kind": "Grouping"
+        // },
+        //  {
+        //     "displayName": "Desc",
+        //     "name": "desc",
+        //     "kind": "Grouping"
+        // },
+        // {
+        //     "displayName": "Start Date",
+        //     "name":"start_date",
+        //     "kind": "Grouping"
+        // },
+        // {
+        //     "displayName": "End Date",
+        //     "name":"end_date",
+        //     "kind": "Grouping"
+        // }
+    ],
+    "dataViewMappings": [
+        {   
+            // "conditions": [
+            //     {
+            //         "fy" : { "min ":1 , "max" :1},
+            //         "key_milestones" : { "min ":0 , "max" :1},
+            //         "team" : { "min ":0 , "max" :1},
+            //         "desc" : { "min ":0 , "max" :1},
+            //         "start_date" : { "min ":1 , "max" :1},
+            //         "end_date" : { "min ":1 , "max" :1}
+            //     }
+            // ],
+            //  "table":{
+            //         "rows":{
+            //                  "for": { "in": "fy" } 
+  
+                        
+
+            //             }
+            // },
+            // "table":{
+            //         "rows":{
+            //             "select":[
+            //                 { "for": { "in": "fy" } },
+            //                 { "for": { "in": "start_date" } },
+            //                 { "for": { "in": "end_date" } },
+            //                 { "for": { "in": "key_milestones" } },
+            //                 { "for": { "in": "milestone_type" } },
+            //                 { "for": { "in": "team" } }
+            //             ]
+
+            //             }
+            // },
+            "categorical": {
+                "categories": {
+                    "for": {
+                        "in": "fy"
+                    },
+                    "dataReductionAlgorithm": {
+                        "top": {}
+                    }
+                },
+                "values": {
+                    "select": [
+                        {
+                            "bind": {
+                                "to": "start_date"
+                            }
+                        },
+                         {
+                            "bind": {
+                                "to": "end_date"
+                            }
+                        }
+
+                    ]
+                }
+            }
+        }
+    ]
+}

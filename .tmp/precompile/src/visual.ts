@@ -20,32 +20,32 @@ module powerbi.extensibility.visual.PBI_CV_DB82D0E6_E5C1_4E34_884B_CAD22AFB245B 
 
 	};
 
-
+	/**
+	 * 
+	 */
 	function converter(options: VisualUpdateOptions): TimelineViewModel {
 		console.log("enter converter");
 
+	    let dataViews = options.dataViews;
+        let categorical = dataViews[0].categorical;
+		let fy = categorical.categories[0];
+        let startDate = categorical.categories[4];
+		let endDate = categorical.categories[5];
 
-		let dataViews = options.dataViews;
-		let categorical = dataViews[0].categorical;
-		let category = categorical.categories[0];
-		let dataValue = category.values;
-
-
+		console.log("categorical" , categorical.categories);
 		
-		let sortedDate = dataValue.sort();
-	//	sortedDate.map(function(d: PrimitiveValue):Date{ return new Date(d)});
-
-		console.log(new Date(sortedDate[0].toString()));
-		console.log(sortedDate[sortedDate.length -2]);
-		console.log("dates..................");
-		console.log(typeof sortedDate[0]);
+		console.log("fy" , fy);
 		
+		console.log("start_dates" ,startDate);
+		console.log("endDate" , endDate);
+		
+		//	sortedDate.map(function(d: PrimitiveValue):Date{ return new Date(d)});
 
 		let timelineView: TimelineViewModel = {
-			maxStartDate: new Date(sortedDate[0].toString()),
-			maxEndDate: new Date(sortedDate[sortedDate.length -2].toString())
+			maxStartDate: new Date(),
+			maxEndDate: new Date()
 		}
-		//	dataView.categorical.values[0] ;;;
+
 		console.log(timelineView);
 		return timelineView;
 	}
@@ -62,7 +62,7 @@ module powerbi.extensibility.visual.PBI_CV_DB82D0E6_E5C1_4E34_884B_CAD22AFB245B 
 			console.log("helloe");
 
 			this.target = options.element;
-			let svg = this.svg = d3.select(options.element).append('svg').classed('mainSvg',true);
+			let svg = this.svg = d3.select(options.element).append('svg').classed('mainSvg', true);
 
 		}
 
@@ -70,40 +70,37 @@ module powerbi.extensibility.visual.PBI_CV_DB82D0E6_E5C1_4E34_884B_CAD22AFB245B 
 
 		public update(options: VisualUpdateOptions) {
 			var width = options.viewport.width,
-			    height = options.viewport.height,
-			    padding = 100;
+				height = options.viewport.height,
+				padding = 100;
 			let timelineView: TimelineViewModel = converter(options);
 			// let maxStartDate= timelineView.maxStartDate.getUTCFullYear();
 			// let maxEndDate = timelineView.maxEndDate.getUTCFullYear();
-		//	this.target.innerHTML = `<p>Update count: <em>${(maxStartDate)}</em></p> <p>Update count: <em>${(maxEndDate)}</em></p`;
-			console.log("updated");
-
-
-
+			//	this.target.innerHTML = `<p>Update count: <em>${(maxStartDate)}</em></p> <p>Update count: <em>${(maxEndDate)}</em></p`;
+			console.log("Start Date", timelineView.maxStartDate, "...End Date", timelineView.maxEndDate);
 
 			var xScale = d3.time.scale()
-			  .domain([timelineView.maxStartDate, timelineView.maxEndDate]) 
+				.domain([timelineView.maxStartDate, timelineView.maxEndDate])
 				.range([padding, width - padding]);
 
 
 			var xAxis = d3.svg.axis()
-			  .orient("bottom")
-			  .scale(xScale)
-			  .ticks(d3.time.months, 1)
+				.orient("bottom")
+				.scale(xScale)
+				.ticks(d3.time.months, 1)
 				.tickFormat(d3.time.format("%b %y"))
-			  .tickSize(16, 2)
+				.tickSize(16, 2)
 
 			this.svg.selectAll("*").remove();
 
 			this.svg.append("g")
-            .attr("class", "xaxis")   
-            .attr("transform", "translate(0," + (height - padding) + ")")
-            .call(xAxis);
+				.attr("class", "xaxis")
+				.attr("transform", "translate(0," + (height - padding) + ")")
+				.call(xAxis);
 
 			this.svg.selectAll(".xaxis text")
-			  .attr("transform", function(d) {
-			      return "translate(" + this.getBBox().height*-2 + "," + this.getBBox().height + ")rotate(-45)";
-				});	  	
+				.attr("transform", function (d) {
+					return "translate(" + this.getBBox().height * -2 + "," + this.getBBox().height + ")rotate(-45)";
+				});
 
 		}
 
