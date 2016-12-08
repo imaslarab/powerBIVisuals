@@ -6,6 +6,11 @@
             "kind": "Grouping"
         },
         {
+            "displayName": "Title Data",
+            "name": "title",
+            "kind": "Grouping"
+        },
+        {
             "displayName": "Measure Data",
             "name": "measure",
             "kind": "Measure"
@@ -18,6 +23,9 @@
                     "category": {
                         "max": 1
                     },
+                    "title": {
+                        "max": 1
+                    },
                     "measure": {
                         "max": 1
                     }
@@ -25,9 +33,18 @@
             ],
             "categorical": {
                 "categories": {
-                    "for": {
-                        "in": "category"
-                    },
+                    "select": [
+                       { 
+                           "for": {
+                                "in": "category"
+                            }
+                        },
+                        {
+                            "for": {
+                                "in": "title"
+                            }
+                        }
+                    ],
                     "dataReductionAlgorithm": {
                         "top": {}
                     }
