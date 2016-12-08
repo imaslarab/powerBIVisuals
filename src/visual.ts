@@ -132,6 +132,21 @@ module powerbi.extensibility.visual {
                 x2: d=> xScale(d.date),
                 y2: height-padding-100
             });
+
+            let textTitle = this.svg.selectAll('.textTitle').data(timelineData);
+            textTitle.enter()
+                    .append('text')
+                    .classed('textTitle', true);
+
+            textTitle.attr({
+                x: d=> xScale(d.date),
+                y: height-padding-110
+            });
+            textTitle.text(d => d.title);
+            // this.svg.selectAll(".textTitle")
+            // .attr("transform", function(d) {
+            //     return "translate(" + this.getBBox().height*-2 + "," + this.getBBox().height + ")rotate(45)";
+            // });
         }
 
         public destroy(): void {

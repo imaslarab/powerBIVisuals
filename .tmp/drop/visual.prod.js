@@ -97,6 +97,19 @@ var powerbi;
                             x2: function (d) { return xScale(d.date); },
                             y2: height - padding - 100
                         });
+                        var textTitle = this.svg.selectAll('.textTitle').data(timelineData);
+                        textTitle.enter()
+                            .append('text')
+                            .classed('textTitle', true);
+                        textTitle.attr({
+                            x: function (d) { return xScale(d.date); },
+                            y: height - padding - 110
+                        });
+                        textTitle.text(function (d) { return d.title; });
+                        // this.svg.selectAll(".textTitle")
+                        // .attr("transform", function(d) {
+                        //     return "translate(" + this.getBBox().height*-2 + "," + this.getBBox().height + ")rotate(45)";
+                        // });
                     };
                     Visual.prototype.destroy = function () {
                         //TODO: Perform any cleanup tasks here
