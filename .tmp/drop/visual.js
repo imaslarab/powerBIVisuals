@@ -23,20 +23,36 @@ var powerbi;
                     //let endDate =categorical[5];
                     var categorical = dataViews[0].categorical;
                     var categories = categorical.categories;
-                    console.log("categories  ", categories[5].values[5]);
-                    // console.log("colums " ,columns);
-                    // console.log("Rows " ,rows);
-                    //	console.log("categorical" , categorical.categories);
-                    //console.log("fy" , fy);
-                    //console.log("values" , values);
-                    //	console.log("start_dates" ,startDate);
-                    //	console.log("endDate" , endDate);
-                    //	sortedDate.map(function(d: PrimitiveValue):Date{ return new Date(d)});
+                    // console.log("categories  " ,categories[5].values[5]);
+                    console.log("categories", categories);
+                    var startDate = categories[4].values;
+                    var endDate = categories[5].values;
+                    console.log("startdate", startDate);
+                    console.log("enddate", endDate);
+                    var _startDate = startDate.map(function (n) {
+                        console.log("mapping");
+                        if (n) {
+                            var x = new Date(n.toString());
+                            return x;
+                        }
+                    });
+                    function filterByID(obj) {
+                        if (obj !== null && !isNaN(obj)) {
+                            return true;
+                        }
+                        else {
+                            return false;
+                        }
+                    }
+                    endDate = endDate.filter(filterByID);
+                    startDate = startDate.filter(filterByID);
+                    console.log("filtered End date", endDate);
+                    console.log("mini data", new Date(Math.min.apply(null, startDate)));
                     var timelineView = {
-                        maxStartDate: new Date(),
-                        maxEndDate: new Date()
+                        minStartDate: new Date(Math.min.apply(null, startDate)),
+                        maxEndDate: new Date(Math.max.apply(null, endDate))
                     };
-                    console.log(timelineView);
+                    console.log("timelineview", timelineView);
                     return timelineView;
                 }
                 var Visual = (function () {
@@ -51,9 +67,9 @@ var powerbi;
                         // let maxStartDate= timelineView.maxStartDate.getUTCFullYear();
                         // let maxEndDate = timelineView.maxEndDate.getUTCFullYear();
                         //	this.target.innerHTML = `<p>Update count: <em>${(maxStartDate)}</em></p> <p>Update count: <em>${(maxEndDate)}</em></p`;
-                        console.log("Start Date", timelineView.maxStartDate, "...End Date", timelineView.maxEndDate);
+                        console.log("Start Date", timelineView.minStartDate, "...End Date", timelineView.maxEndDate);
                         var xScale = d3.time.scale()
-                            .domain([timelineView.maxStartDate, timelineView.maxEndDate])
+                            .domain([timelineView.minStartDate, timelineView.maxEndDate])
                             .range([padding, width - padding]);
                         var xAxis = d3.svg.axis()
                             .orient("bottom")

@@ -5,7 +5,7 @@ module powerbi.extensibility.visual.PBI_CV_DB82D0E6_E5C1_4E34_884B_CAD22AFB245B 
 	 */
 	interface TimelineViewModel {
 		//	events: TimelineDataPoints[]	;
-		maxStartDate: Date;
+		minStartDate: Date;
 		maxEndDate: Date;
 
 	};
@@ -26,38 +26,58 @@ module powerbi.extensibility.visual.PBI_CV_DB82D0E6_E5C1_4E34_884B_CAD22AFB245B 
 	function converter(options: VisualUpdateOptions): TimelineViewModel {
 		console.log("enter converter");
 
-	    let dataViews = options.dataViews;
-		console.log("options" , options);
-		
-        // let table = dataViews[0].table;
+		let dataViews = options.dataViews;
+		console.log("options", options);
+
+		// let table = dataViews[0].table;
 		// let rows  = table.rows[0][2];
 		// console.log(rows[15]);
 		// let columns = table.columns;
-     	//let startDate = rows[2].roles;
+		//let startDate = rows[2].roles;
 		//let endDate =categorical[5];
 		let categorical = dataViews[0].categorical;
 		let categories = categorical.categories;
-		console.log("categories  " ,categories[5].values[5]);
-		
-		// console.log("colums " ,columns);
-		// console.log("Rows " ,rows);
-		
-	//	console.log("categorical" , categorical.categories);
-		
-		//console.log("fy" , fy);
-		 //console.log("values" , values);
-		
-	//	console.log("start_dates" ,startDate);
-	//	console.log("endDate" , endDate);
-		
-		//	sortedDate.map(function(d: PrimitiveValue):Date{ return new Date(d)});
+		// console.log("categories  " ,categories[5].values[5]);
+		console.log("categories", categories);
+		let startDate = categories[4].values;
+		let endDate = categories[5].values;
+		console.log("startdate", startDate)
+		console.log("enddate", endDate);
 
-		let timelineView: TimelineViewModel = {
-			maxStartDate: new Date(),
-			maxEndDate: new Date()
+
+		let _startDate = startDate.map(function (n) {
+			console.log("mapping");
+
+			if (n) {
+				let x = new Date(n.toString());
+				return x;
+			}
+
+
+		});
+
+		function filterByID(obj) {
+			if (obj !== null  && !isNaN(obj)) {
+				return true;
+			} else {
+				return false;
+			}
 		}
 
-		console.log(timelineView);
+		endDate = endDate.filter(filterByID);
+		startDate = startDate.filter(filterByID);
+
+		console.log("filtered End date" , endDate);
+		
+		console.log("mini data", new Date(Math.min.apply(null, startDate)));
+
+
+		let timelineView: TimelineViewModel = {
+			minStartDate: new Date(Math.min.apply(null, startDate)),
+			maxEndDate: new Date(Math.max.apply(null, endDate))
+		}
+
+		console.log("timelineview", timelineView);
 		return timelineView;
 	}
 
@@ -87,10 +107,10 @@ module powerbi.extensibility.visual.PBI_CV_DB82D0E6_E5C1_4E34_884B_CAD22AFB245B 
 			// let maxStartDate= timelineView.maxStartDate.getUTCFullYear();
 			// let maxEndDate = timelineView.maxEndDate.getUTCFullYear();
 			//	this.target.innerHTML = `<p>Update count: <em>${(maxStartDate)}</em></p> <p>Update count: <em>${(maxEndDate)}</em></p`;
-			console.log("Start Date", timelineView.maxStartDate, "...End Date", timelineView.maxEndDate);
+			console.log("Start Date", timelineView.minStartDate, "...End Date", timelineView.maxEndDate);
 
 			var xScale = d3.time.scale()
-				.domain([timelineView.maxStartDate, timelineView.maxEndDate])
+				.domain([timelineView.minStartDate, timelineView.maxEndDate])
 				.range([padding, width - padding]);
 
 
