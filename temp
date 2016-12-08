@@ -12,3 +12,33 @@
 
             //             }
             // },
+
+
+                    "rows": {
+                    "select": [{
+                        "for": {
+                            "in": "fy"
+                        }
+                    }, {
+                        "for": {
+                            "in": "key_milestones"
+                        }
+                    }, {
+                        "for": {
+                            "in": "milestone_type"
+                        }
+                    }, {
+                        "for": {
+                            "in": "team"
+                        }
+                    }, {
+                        "for": {
+                            "in": "start_date"
+                        }
+                    }, {
+                        "for": {
+                            "in": "end_date"
+                        }
+                    }]
+
+                },

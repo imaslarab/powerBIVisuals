@@ -14,14 +14,23 @@ var powerbi;
                 function converter(options) {
                     console.log("enter converter");
                     var dataViews = options.dataViews;
+                    console.log("options", options);
+                    // let table = dataViews[0].table;
+                    // let rows  = table.rows[0][2];
+                    // console.log(rows[15]);
+                    // let columns = table.columns;
+                    //let startDate = rows[2].roles;
+                    //let endDate =categorical[5];
                     var categorical = dataViews[0].categorical;
-                    var fy = categorical.categories[0];
-                    var startDate = categorical.categories[4];
-                    var endDate = categorical.categories[5];
-                    console.log("categorical", categorical.categories);
-                    console.log("fy", fy);
-                    console.log("start_dates", startDate);
-                    console.log("endDate", endDate);
+                    var categories = categorical.categories;
+                    console.log("categories  ", categories[5].values[5]);
+                    // console.log("colums " ,columns);
+                    // console.log("Rows " ,rows);
+                    //	console.log("categorical" , categorical.categories);
+                    //console.log("fy" , fy);
+                    //console.log("values" , values);
+                    //	console.log("start_dates" ,startDate);
+                    //	console.log("endDate" , endDate);
                     //	sortedDate.map(function(d: PrimitiveValue):Date{ return new Date(d)});
                     var timelineView = {
                         maxStartDate: new Date(),

@@ -27,17 +27,28 @@ module powerbi.extensibility.visual {
 		console.log("enter converter");
 
 	    let dataViews = options.dataViews;
-        let categorical = dataViews[0].categorical;
-		let fy = categorical.categories[0];
-        let startDate = categorical.categories[4];
-		let endDate = categorical.categories[5];
-
-		console.log("categorical" , categorical.categories);
+		console.log("options" , options);
 		
-		console.log("fy" , fy);
+        // let table = dataViews[0].table;
+		// let rows  = table.rows[0][2];
+		// console.log(rows[15]);
+		// let columns = table.columns;
+     	//let startDate = rows[2].roles;
+		//let endDate =categorical[5];
+		let categorical = dataViews[0].categorical;
+		let categories = categorical.categories;
+		console.log("categories  " ,categories[5].values[5]);
 		
-		console.log("start_dates" ,startDate);
-		console.log("endDate" , endDate);
+		// console.log("colums " ,columns);
+		// console.log("Rows " ,rows);
+		
+	//	console.log("categorical" , categorical.categories);
+		
+		//console.log("fy" , fy);
+		 //console.log("values" , values);
+		
+	//	console.log("start_dates" ,startDate);
+	//	console.log("endDate" , endDate);
 		
 		//	sortedDate.map(function(d: PrimitiveValue):Date{ return new Date(d)});
 
