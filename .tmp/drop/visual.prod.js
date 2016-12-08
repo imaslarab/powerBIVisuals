@@ -27,6 +27,7 @@ var powerbi;
                     console.log("categories", categories);
                     var startDate = categories[4].values;
                     var endDate = categories[5].values;
+                    var title = categories[3].values;
                     console.log("startdate", startDate);
                     console.log("enddate", endDate);
                     var _startDate = startDate.map(function (n) {
@@ -48,7 +49,18 @@ var powerbi;
                     startDate = startDate.filter(filterByID);
                     console.log("filtered End date", endDate);
                     console.log("mini data", new Date(Math.min.apply(null, startDate)));
+                    var events = [];
+                    for (var x = 0; x <= title.length; x++) {
+                        var event_1 = {
+                            eventName: String(title[x]),
+                            startDate: new Date(String(startDate[x])),
+                            endDate: new Date(String(endDate[x]))
+                        };
+                        events[x] = event_1;
+                        console.log("mapping");
+                    }
                     var timelineView = {
+                        events: events,
                         minStartDate: new Date(Math.min.apply(null, startDate)),
                         maxEndDate: new Date(Math.max.apply(null, endDate))
                     };
@@ -64,6 +76,7 @@ var powerbi;
                     Visual.prototype.update = function (options) {
                         var width = options.viewport.width, height = options.viewport.height, padding = 100;
                         var timelineView = converter(options);
+                        var timeline;
                         // let maxStartDate= timelineView.maxStartDate.getUTCFullYear();
                         // let maxEndDate = timelineView.maxEndDate.getUTCFullYear();
                         //	this.target.innerHTML = `<p>Update count: <em>${(maxStartDate)}</em></p> <p>Update count: <em>${(maxEndDate)}</em></p`;
@@ -77,6 +90,14 @@ var powerbi;
                             .ticks(d3.time.months, 1)
                             .tickFormat(d3.time.format("%b %y"))
                             .tickSize(16, 2);
+                        console.log("end date..............", timelineView.events[6].endDate);
+                        // 			this.svg.append( "line" )
+                        //   .attr( "x1", 300 )
+                        //   .attr( "y1", 390 )
+                        //   .attr( "x2", 500 )
+                        //   .attr( "y2", 430 )
+                        //   .attr( "stroke", "green" )
+                        //   .attr( "stroke-width", 2);
                         this.svg.selectAll("*").remove();
                         this.svg.append("g")
                             .attr("class", "xaxis")
@@ -86,6 +107,26 @@ var powerbi;
                             .attr("transform", function (d) {
                             return "translate(" + this.getBBox().height * -2 + "," + this.getBBox().height + ")rotate(-45)";
                         });
+                        var lines = this.svg.selectAll('.line').data(timelineView.events);
+                        lines.enter().append('line')
+                            .classed('linebar', true);
+                        lines.style("stroke", "black");
+                        lines.style("stroke-width", 3);
+                        lines.attr({
+                            x1: function (d, e) { return xScale(d.endDate); },
+                            y1: height - padding,
+                            x2: function (d, e) { return xScale(d.endDate); },
+                            y2: function (d, e) { return height - padding - e * 10; }
+                        });
+                        var textTitle = this.svg.selectAll('.textTitle').data(timelineView.events);
+                        textTitle.enter()
+                            .append('text')
+                            .classed('textTitle', true);
+                        textTitle.attr({
+                            x: function (d) { return xScale(d.endDate); },
+                            y: function (d, e) { return height - padding - e * 11; }
+                        });
+                        textTitle.text(function (d) { return d.eventName; });
                     };
                     Visual.prototype.destroy = function () {
                         //TODO: Perform any cleanup tasks here
